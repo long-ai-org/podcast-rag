@@ -1,0 +1,21 @@
+# Virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+
+# Environment variables
+.env
+
+# Test files
+test*
+
+# Poetry lock file
+poetry.lock
+
+# Main Python file
+main.py
+utils.py
+
+# Repository specific files
+input/
