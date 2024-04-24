@@ -54,6 +54,7 @@ retriever = vectorstore.as_retriever()
 
 def main():
     st.set_page_config(page_title="The China PodcastBot", layout="wide")
+    st.title('Podcast Analyst Genie: Ask every question about China')
     st.markdown(
         """
         The China PodcastBot is an AI that allows access to knowledge from various podcasts about living and working in China.
@@ -64,38 +65,31 @@ def main():
     if "response" not in st.session_state:
         st.session_state["responses"] = ["How can I assist you today?"]
 
-    if "requests" not in st.session_state:
-        st.session_state["requests"] = []
+    if "message" not in st.session_state:
+        st.session_state.message = []
 
-    response_container = st.container()
-    text_container = st.container()
-
-    with text_container:
-        query = st.chat_input("Please enter a question.", key="input")
-        if query:
-            with st.spinner("typing..."):
-                rag_chain = (
+    for message in st.session_state.message:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+    
+    if prompt := st.chat_input("Please enter a question."):
+        st.session_state.message.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+        
+        rag_chain = (
                     {"context": retriever, "question": RunnablePassthrough()}
                     | custom_rag_prompt
                     | llm
                 )
-
-            response = rag_chain.invoke(query).content
-
-            st.session_state.requests.append(query)
-            st.session_state.responses.append(response)
-
-    with response_container:
-        if st.session_state["responses"]:
-
-            for i in range(len(st.session_state["responses"])):
-                message(st.session_state["responses"][i], key=str(i))
-                if i < len(st.session_state["requests"]):
-                    message(
-                        st.session_state["requests"][i],
-                        is_user=True,
-                        key=str(i) + "_user",
-                    )
+        
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty() 
+            response = rag_chain.invoke(prompt).content
+            message_placeholder.markdown(response + "|")
+        message_placeholder.markdown(response)
+            
+        st.session_state.message.append({"role": "assistant", "content": response})
 
 
 if __name__ == "__main__":
