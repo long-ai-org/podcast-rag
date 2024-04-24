@@ -6,18 +6,18 @@ from langchain.prompts import PromptTemplate
 from langchain.schema.runnable import RunnablePassthrough
 from langchain_community.vectorstores.zilliz import Zilliz
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
-from streamlit_chat import message
 
 template = """
-        Beantworten Sie die Frage des Nutzers am Ende des Textes anhand der folgenden Informationen. 
-        Bei den Informationen handelt es sich um transkribierte Ausschnitte aus verschiedenen 
-        Podcast-Episoden über das Arbeiten in China. Die Fragen der Nutzer sollen nun nur auf der 
+        Beantworten Sie die Frage des Nutzers am Ende des Textes anhand der folgenden Informationen.
+        Bei den Informationen handelt es sich um transkribierte Ausschnitte aus verschiedenen
+        Podcast-Episoden über das Arbeiten in China. Die Fragen der Nutzer sollen nun nur auf der
         Grundlage der Antworten der Podcast-Gäste aus den Podcasts beantwortet werden. 
         Wenn in den Informationen kein relevantes Wissen zur Beantwortung der Frage vorhanden ist,
-        sagen Sie bitte "Ich habe kein Podcast-Wissen zu dieser Frage". Andernfalls sollte die 
-        Ausgabe in Stichpunkten als Aufzählungspunkte erfolgen (jeder Aufzählungspunkt in einer Zeile) und der 
-        Name des Podcast-Gastes und der Name des Podcasts sollten in Klammern nach jedem Punkt im 
-        Format "(PODCAST NAME - PODCAST GAST)" stehen. Darüber hinaus sollte kein Ausgabetext angezeigt werden.
+        sagen Sie bitte "Ich habe kein Podcast-Wissen zu dieser Frage". Andernfalls sollte die
+        Ausgabe in Stichpunkten als Aufzählungspunkte erfolgen (jeder Aufzählungspunkt in einer Zeile)
+        und der Name des Podcast-Gastes und der Name des Podcasts sollten in Klammern nach jedem
+        Punkt im Format "(PODCAST NAME - PODCAST GAST)" stehen. Am Anfang der Antwort soll hierbei
+        stehen "Ich habe folgenden Informationen gefunden:" Darüber hinaus sollte kein Ausgabetext angezeigt werden.
         Wenn der Nutzer in Englisch seine Frage stellt, soll die Antwort auch ins Englische übersetzt werden.
 
 {context}
@@ -53,7 +53,7 @@ retriever = vectorstore.as_retriever()
 
 
 def main():
-    st.set_page_config(page_title="The China PodcastBot", layout="wide")
+    st.set_page_config(page_title="The China PodcastBot", layout="centered")
     st.title('Podcast Analyst Genie: Ask every question about China')
     st.markdown(
         """
@@ -84,11 +84,7 @@ def main():
                 )
         
         with st.chat_message("assistant"):
-            message_placeholder = st.empty() 
-            response = rag_chain.invoke(prompt).content
-            message_placeholder.markdown(response + "|")
-        message_placeholder.markdown(response)
-            
+            response = st.write_stream(rag_chain.stream(prompt))
         st.session_state.message.append({"role": "assistant", "content": response})
 
 
