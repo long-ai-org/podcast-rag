@@ -6,6 +6,7 @@ from langchain.prompts import PromptTemplate
 from langchain.schema.runnable import RunnablePassthrough
 from langchain_community.vectorstores.zilliz import Zilliz
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
+load_dotenv()
 
 template = """
         Beantworten Sie die Frage des Nutzers am Ende des Textes anhand der folgenden Informationen.
@@ -35,7 +36,6 @@ llm = AzureChatOpenAI(
                 max_tokens=4096,
             )
 
-load_dotenv()
 
 embeddings = AzureOpenAIEmbeddings(model=os.environ.get("OPENAI_EMBEDDINGS_MODEL"))
 connection_args = {
