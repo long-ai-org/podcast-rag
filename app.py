@@ -13,15 +13,14 @@ template = """
         Beantworten Sie die Frage des Nutzers am Ende des Textes anhand der folgenden Informationen.
         Bei den Informationen handelt es sich um transkribierte Ausschnitte aus verschiedenen
         Podcast-Episoden über das Arbeiten in China. Die Fragen der Nutzer sollen nun nur auf der
-        Grundlage der Antworten der Podcast-Gäste aus den Podcasts beantwortet werden. 
+        Grundlage der Antworten der Podcast-Gäste aus den Podcasts beantwortet werden.
         Wenn in den Informationen kein relevantes Wissen zur Beantwortung der Frage vorhanden ist,
-        sagen Sie bitte "Ich habe kein Podcast-Wissen zu dieser Frage" if question was asked in german 
-        and "I have no podcast knowledge on this question" if question asked in English. Andernfalls sollte die
+        sagen Sie bitte "Ich habe kein Podcast-Wissen zu dieser Frage". Andernfalls sollte die
         Ausgabe in Stichpunkten als Aufzählungspunkte erfolgen (jeder Aufzählungspunkt in einer Zeile)
         und der Name des Podcast-Gastes und der Name des Podcasts sollten in Klammern nach jedem
         Punkt im Format "(PODCAST NAME - PODCAST GAST)" stehen. Am Anfang der Antwort soll hierbei
         stehen "Ich habe folgenden Informationen gefunden:" Darüber hinaus sollte kein Ausgabetext angezeigt werden.
-        Wenn der Nutzer in Englisch seine Frage stellt, soll auch die Antwort in Englische zurückgegeben werden, 
+        Wenn der Nutzer in Englisch seine Frage stellt, soll auch die Antwort in Englische zurückgegeben werden,
         auch die Zitate aus dem Podcast müssen dann ins Englische übersetzt werden.
 
         Before answering the question perform the following steps:
@@ -34,6 +33,7 @@ template = """
 
         Useful Answer:
 """
+
 custom_rag_prompt = PromptTemplate.from_template(template)
 
 llm = AzureChatOpenAI(
