@@ -23,10 +23,6 @@ template = """
         Wenn der Nutzer in Englisch seine Frage stellt, soll auch die Antwort in Englische zurückgegeben werden,
         auch die Zitate aus dem Podcast müssen dann ins Englische übersetzt werden.
 
-        Before answering the question perform the following steps:
-        1. Determine which language the user's question is in.
-        2. Answer the user's question using the language of the user's question.
-
         {context}
 
         Frage: {question}
@@ -66,6 +62,8 @@ def main():
         """
         The China PodcastBot is an AI that allows access to knowledge from various podcasts about living and working in China.
         Ask a China-related business question, and the AI will display all the answers from podcast guests on various podcasts.
+
+        ***Question should be asked in German***.
     """
     )
 
