@@ -13,9 +13,9 @@ connection_args = {
     "token": os.environ.get("ZILLIZ_CLOUD_API_KEY"),
 }
 
-COLLECTION_NAME = "podcast_fragen_antworten_chunks"
+COLLECTION_NAME = "podcast_questions_answers_chunks"
 
-df = pd.read_excel("input/Podcast Chunks.xlsx")
+df = pd.read_excel("input/Chunks_new.xlsx")
 
 for index, row in df.iterrows():
     Zilliz(
@@ -23,7 +23,7 @@ for index, row in df.iterrows():
         connection_args=connection_args,
         collection_name=COLLECTION_NAME,
     ).from_texts(
-        texts=[row["Chunk"]],
+        texts=[row["F"]],
         embedding=embeddings,
         collection_name=COLLECTION_NAME,
         connection_args=connection_args,
