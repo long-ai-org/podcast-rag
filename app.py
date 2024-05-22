@@ -14,9 +14,9 @@ template = """
         The information are transcribed excerpts from various podcast episodes about working in China.
         The user's questions will now be answered based only on the podcast guests' answers from the podcasts.
         If there is no relevant knowledge in the information to answer the question, please say 
-        “I have no podcast knowledge on this question”. Otherwise, the output should be in bullet 
-        points (each bullet point on one line) and the name of the podcast guest and the name of the podcast 
-        should be in brackets after each bullet point in the format “(PODCAST NAME - PODCAST GUEST)”.
+        “I have no podcast knowledge on this question”. Otherwise, the output should be in bullet
+        points (each bullet point on one line) and the name of the podcast guest and the name of the 
+        podcast episode should be in brackets after each bullet point in the format “(PODCAST EPISODE - PODCAST GUEST)”.
         The answer should start with “I found the following information:” 
         No further output text should be displayed.
 
