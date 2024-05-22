@@ -10,22 +10,19 @@ from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 load_dotenv()
 
 template = """
-        Beantworten Sie die Frage des Nutzers am Ende des Textes anhand der folgenden Informationen.
-        Bei den Informationen handelt es sich um transkribierte Ausschnitte aus verschiedenen
-        Podcast-Episoden über das Arbeiten in China. Die Fragen der Nutzer sollen nun nur auf der
-        Grundlage der Antworten der Podcast-Gäste aus den Podcasts beantwortet werden.
-        Wenn in den Informationen kein relevantes Wissen zur Beantwortung der Frage vorhanden ist,
-        sagen Sie bitte "Ich habe kein Podcast-Wissen zu dieser Frage". Andernfalls sollte die
-        Ausgabe in Stichpunkten als Aufzählungspunkte erfolgen (jeder Aufzählungspunkt in einer Zeile)
-        und der Name des Podcast-Gastes und der Name des Podcasts sollten in Klammern nach jedem
-        Punkt im Format "(PODCAST NAME - PODCAST GAST)" stehen. Am Anfang der Antwort soll hierbei
-        stehen "Ich habe folgenden Informationen gefunden:" Darüber hinaus sollte kein Ausgabetext angezeigt werden.
-        Wenn der Nutzer in Englisch seine Frage stellt, soll auch die Antwort in Englische zurückgegeben werden,
-        auch die Zitate aus dem Podcast müssen dann ins Englische übersetzt werden.
+        Answer the user's question at the end of the text using the following information.
+        The information are transcribed excerpts from various podcast episodes about working in China.
+        The user's questions will now be answered based only on the podcast guests' answers from the podcasts.
+        If there is no relevant knowledge in the information to answer the question, please say 
+        “I have no podcast knowledge on this question”. Otherwise, the output should be in bullet 
+        points (each bullet point on one line) and the name of the podcast guest and the name of the podcast 
+        should be in brackets after each bullet point in the format “(PODCAST NAME - PODCAST GUEST)”.
+        The answer should start with “I found the following information:” 
+        No further output text should be displayed.
 
         {context}
 
-        Frage: {question}
+        Question: {question}
 
         Useful Answer:
 """
@@ -46,7 +43,7 @@ connection_args = {
     "token": os.environ.get("ZILLIZ_CLOUD_API_KEY"),
 }
 
-COLLECTION_NAME = "podcast_fragen_antworten_chunks"
+COLLECTION_NAME = "podcast_questions_answers_chunks"
 vectorstore = Zilliz(
     embedding_function=embeddings,
     connection_args=connection_args,
@@ -60,10 +57,8 @@ def main():
     st.title("The China PodcastBot: Ask questions about working in China")
     st.markdown(
         """
-        The China PodcastBot is an AI that allows access to knowledge from various podcasts about living and working in China.
+        The China PodcastBot is an AI chatbot that allows access to knowledge from various podcasts about living and working in China.
         Ask a China-related business question, and the AI will display all the answers from podcast guests on various podcasts.
-
-        ***Question should be asked in German***.
     """
     )
 
